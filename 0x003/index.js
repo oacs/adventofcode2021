@@ -15,8 +15,7 @@ console.log(
   "First star:",
   binToNumber(firstStar.map((char) => char ^ 1)) * binToNumber(firstStar)
 );
-console.log(firstStar ^ 1);
-console.log(binToNumber(firstStar.map((char) => char ^ 1)));
+
 const grabCommonBitAtIndex = (index) => (acc, curr) =>
   parseInt(curr[index]) + acc;
 
