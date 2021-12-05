@@ -84,6 +84,8 @@ const grabLastWinner = (cardtones) => {
               card.winner = number;
               lastWinner = { card: cardtones.splice(index, 1)[0] };
               index--;
+              j = card.rows[i].length;
+              i = card.rows.length;
             }
           }
         }
