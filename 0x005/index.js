@@ -82,20 +82,19 @@ const secondTryCount = Object.keys(secondTry).reduce(
 // Last try
 const calcInterceptions = (coords, includeDiagonals = false) => {
   const matrix = coords.reduce((acc, [[x1, y1], [x2, y2]]) => {
-    if (y1 === y2 || x1 === x2) {
-      for (let x = Math.min(x1, x2); x <= Math.max(x1, x2); x++) {
-        for (let y = Math.min(y1, y2); y <= Math.max(y1, y2); y++) {
-          const path = `${x},${y}`;
-          acc[path] = (acc[path] ?? 0) + 1;
-        }
-      }
-    } else if (includeDiagonals) {
-      const slope = (y2 - y1) / (x2 - x1);
-      if (Math.atan(Math.abs(slope)) === Math.PI / 4) {
-        for (let x = Math.min(x1, x2); x <= Math.max(x1, x2); x++) {
-          const y = slope * (x - x1) + y1;
-          const path = `${x},${y}`;
-          acc[path] = (acc[path] ?? 0) + 1;
+    const slope = (y2 - y1) / (x2 - x1);
+    const isValid = Math.atan(Math.abs(slope)) === Math.PI / 4;
+    for (let x = Math.min(x1, x2); x <= Math.max(x1, x2); x++) {
+      if (includeDiagonals && isValid) {
+        const y = slope * (x - x1) + y1;
+        const path = `${x},${y}`;
+        acc[path] = (acc[path] ?? 0) + 1;
+      } else {
+        if (x1 === x2 || y1 == y2) {
+          for (let y = Math.min(y1, y2); y <= Math.max(y1, y2); y++) {
+            const path = `${x},${y}`;
+            acc[path] = (acc[path] ?? 0) + 1;
+          }
         }
       }
     }
